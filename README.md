@@ -183,9 +183,6 @@ This project includes a GitHub Actions workflow (`.github/workflows/docker-build
 
 **Setup required:**
 
-1. Create a Docker Hub account (if not already done)
-2. Follow the [Docker Hub CI/CD Setup Guide](./DOCKER_HUB_SETUP.md) to configure GitHub Secrets
-
 **How it works:**
 
 - ✅ On push to `main`/`develop`: builds, tags, and pushes to Docker Hub
@@ -193,8 +190,6 @@ This project includes a GitHub Actions workflow (`.github/workflows/docker-build
 - ✅ On version tags (e.g., `v1.0.0`): builds and pushes with semantic versioning
 - ✅ Automatic caching for faster rebuilds
 - ✅ Posts workflow status to pull requests
-
-**See [DOCKER_HUB_SETUP.md](./DOCKER_HUB_SETUP.md) for complete configuration instructions.**
 
 ---
 
@@ -341,8 +336,6 @@ The application includes a comprehensive error handling system with:
 - **User-friendly error messages**
 - **Error boundaries** for component isolation
 - **Toast notifications** for feedback
-
-See [ERROR_HANDLING_GUIDE.md](./ERROR_HANDLING_GUIDE.md) for complete documentation and examples.
 
 ---
 
