@@ -3,6 +3,7 @@
 import { CreateBook, TextSegment } from "@/types";
 import { connectToDatabase } from "@/database/mongoose";
 import { escapeRegex, generateSlug, serializeData } from "@/lib/utils";
+import { serializeError } from "@/lib/error";
 import Book from "@/database/models/bookModel";
 import BookSegment from "@/database/models/bookSegmentModel";
 import mongoose from "mongoose";
@@ -31,7 +32,7 @@ export const getAllBooks = async (search?: string) => {
     console.error("Error connecting to database", e);
     return {
       success: false,
-      error: e,
+      error: serializeError(e),
     };
   }
 };
@@ -58,7 +59,7 @@ export const checkBookExists = async (title: string) => {
     console.error("Error checking book exists", e);
     return {
       exists: false,
-      error: e,
+      error: serializeError(e),
     };
   }
 };
@@ -122,7 +123,7 @@ export const createBook = async (data: CreateBook) => {
 
     return {
       success: false,
-      error: e,
+      error: serializeError(e),
     };
   }
 };
@@ -145,7 +146,7 @@ export const getBookBySlug = async (slug: string) => {
     console.error("Error fetching book by slug", e);
     return {
       success: false,
-      error: e,
+      error: serializeError(e),
     };
   }
 };
@@ -186,7 +187,7 @@ export const saveBookSegments = async (
 
     return {
       success: false,
-      error: e,
+      error: serializeError(e),
     };
   }
 };

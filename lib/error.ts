@@ -201,3 +201,28 @@ export const executeWithErrorHandling = async <T>(
     return null;
   }
 };
+
+// Safely serialize errors for server-to-client transmission
+// Prevents React error #31 by ensuring errors are plain strings, not Error instances
+export const serializeError = (err: unknown): string => {
+  if (err instanceof Error) {
+    return err.message || "An unknown error occurred";
+  }
+
+  if (typeof err === "string") {
+    return err;
+  }
+
+  if (err && typeof err === "object") {
+    const errorObj = err as Record<string, unknown>;
+    if ("message" in errorObj && typeof errorObj.message === "string") {
+      return errorObj.message;
+    }
+  }
+
+  try {
+    return JSON.stringify(err);
+  } catch {
+    return "An unknown error occurred";
+  }
+};
