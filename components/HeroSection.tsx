@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Mic, BookOpen, Zap, ArrowRight } from "lucide-react";
 
@@ -75,9 +74,9 @@ const HeroSection = () => {
         <div className="absolute top-0 right-0 w-96 h-96 bg-world-illustration/5 rounded-full blur-3xl -z-10" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-200/5 rounded-full blur-3xl -z-10" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start relative z-10">
           {/* Left Content */}
-          <div className="lg:col-span-1 flex flex-col justify-center">
+          <div className="lg:col-span-1 flex flex-col justify-center h-full">
             <div className="mb-6">
               <div className="inline-block px-4 py-2 bg-white rounded-lg border border-[#f3e4c7] mb-4">
                 <span className="text-sm font-semibold text-[#663820]">
@@ -92,24 +91,30 @@ const HeroSection = () => {
                 documents using natural voice conversations.
               </p>
             </div>
-          </div>
 
-          {/* Center Illustration */}
-          <div className="lg:col-span-1 flex items-center justify-center">
-            <div className="relative w-full aspect-square flex items-center justify-center">
-              <Image
-                src="/assets/hero-illustration.png"
-                alt="Document AI Workflow"
-                width={320}
-                height={320}
-                className="object-contain drop-shadow-lg"
-                priority
-              />
+            <div className="rounded-2xl border border-white/70 bg-white/60 backdrop-blur-sm p-5 sm:p-6">
+              <p className="text-sm uppercase tracking-[0.16em] text-[#663820] font-semibold mb-3">
+                Why teams choose Bookify
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="rounded-xl bg-white/90 border border-[#f3e4c7] p-4">
+                  <p className="text-2xl font-bold text-[#212a3b]">10x</p>
+                  <p className="text-sm text-[#3d485e]">
+                    Faster information recall
+                  </p>
+                </div>
+                <div className="rounded-xl bg-white/90 border border-[#f3e4c7] p-4">
+                  <p className="text-2xl font-bold text-[#212a3b]">24/7</p>
+                  <p className="text-sm text-[#3d485e]">
+                    On-demand voice learning
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Right Steps */}
-          <div className="lg:col-span-1 space-y-5">
+          <div className="lg:col-span-1 space-y-5 rounded-2xl border border-white/60 bg-white/35 p-4 sm:p-5">
             {[
               {
                 number: "01",
