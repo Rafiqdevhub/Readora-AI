@@ -124,11 +124,8 @@ export default function ContactPage() {
             <p className="text-(--text-secondary) leading-7">Within 24 hours</p>
           </article>
         </section>
-
-        {/* Contact Form */}
         <ContactForm />
       </main>
-      <Footer />
     </>
   );
 }

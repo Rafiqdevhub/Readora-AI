@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 const Page = () => {
   return (
-    <main className="new-book">
+    <main className="new-book pt-[calc(var(--navbar-height)+4rem)]! sm:pt-[calc(var(--navbar-height)+5rem)]!">
       <section className="flex flex-col gap-5 text-center">
         <h1 className="page-title-xl">Add a New Book</h1>
         <p className="subtitle">

@@ -3,79 +3,115 @@
 import Link from "next/link";
 import Image from "next/image";
 
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "Pricing", href: "/subscriptions" },
+  { label: "Contact", href: "/contact" },
+];
+
+const legalLinks = [
+  { label: "Privacy Policy", href: "#" },
+  { label: "Terms of Service", href: "#" },
+  { label: "Support", href: "/contact" },
+];
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-(--bg-primary) border-t border-gray-200 mt-20">
-      <div className="wrapper py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Brand Section */}
-          <div className="flex flex-col items-start">
-            <Link href="/" className="flex gap-0.5 items-center mb-3">
-              <Image
-                src="/assets/logo.png"
-                alt="Readora"
-                width={42}
-                height={26}
-              />
-              <span className="logo-text">Readora</span>
-            </Link>
-            <p className="text-gray-600 text-sm">
-              Your AI-powered voice companion for documents.
-            </p>
-          </div>
+    <footer className="relative mt-20 overflow-hidden border-t border-(--border-medium) bg-(--bg-primary)">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(102,56,32,0.12),transparent_32%),radial-gradient(circle_at_82%_14%,rgba(33,42,59,0.12),transparent_30%),linear-gradient(to_bottom,rgba(255,255,255,0.35),transparent_50%)]" />
 
-          {/* Quick Links */}
-          <div className="flex flex-col items-start">
-            <h3 className="font-semibold text-gray-800 mb-4">Quick Links</h3>
-            <nav className="flex flex-col gap-2">
-              <Link
-                href="/"
-                className="text-gray-600 hover:text-gray-800 text-sm"
-              >
-                Home
+      <div className="wrapper relative z-10 py-14 md:py-16">
+        <div className="rounded-3xl border border-(--border-subtle) bg-white/70 p-6 shadow-soft-md backdrop-blur-sm md:p-10">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+            <div className="md:col-span-6 lg:col-span-5">
+              <Link href="/" className="inline-flex items-center gap-2">
+                <div className="rounded-lg bg-white p-1.5 shadow-soft-sm">
+                  <Image
+                    src="/assets/logo.png"
+                    alt="Readora"
+                    width={36}
+                    height={24}
+                  />
+                </div>
+                <span className="logo-text block!">Readora</span>
               </Link>
+
+              <p className="mt-4 max-w-md text-sm leading-6 text-(--text-secondary) md:text-base">
+                A warm reading studio where your documents become expressive
+                conversations through AI voices.
+              </p>
+
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-(--border-medium) bg-(--bg-tertiary) px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-(--color-brand)">
+                  Voice-first
+                </span>
+                <span className="rounded-full border border-(--border-medium) bg-(--bg-tertiary) px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-(--color-brand)">
+                  Summaries
+                </span>
+                <span className="rounded-full border border-(--border-medium) bg-(--bg-tertiary) px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-(--color-brand)">
+                  Study Flow
+                </span>
+              </div>
+            </div>
+
+            <div className="md:col-span-3 lg:col-span-3">
+              <h3 className="font-serif text-lg font-semibold text-(--text-primary)">
+                Explore
+              </h3>
+              <nav className="mt-4 flex flex-col gap-2.5">
+                {quickLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="w-fit text-sm font-medium text-(--text-secondary) transition-colors hover:text-(--color-brand)"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+
+            <div className="md:col-span-3 lg:col-span-2">
+              <h3 className="font-serif text-lg font-semibold text-(--text-primary)">
+                Legal
+              </h3>
+              <nav className="mt-4 flex flex-col gap-2.5">
+                {legalLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="w-fit text-sm font-medium text-(--text-secondary) transition-colors hover:text-(--color-brand)"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            <div className="md:col-span-12 lg:col-span-2">
+              <h3 className="font-serif text-lg font-semibold text-(--text-primary)">
+                Get Started
+              </h3>
+              <p className="mt-4 text-sm leading-6 text-(--text-secondary)">
+                Turn your next PDF into a guided audio experience.
+              </p>
               <Link
                 href="/books/new"
-                className="text-gray-600 hover:text-gray-800 text-sm"
+                className="mt-5 inline-flex rounded-full bg-(--color-brand) px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-(--color-brand-hover)"
               >
-                Upload Document
+                Upload Now
               </Link>
-              <Link
-                href="/subscriptions"
-                className="text-gray-600 hover:text-gray-800 text-sm"
-              >
-                Pricing
-              </Link>
-            </nav>
+            </div>
           </div>
 
-          {/* Legal */}
-          <div className="flex flex-col items-start">
-            <h3 className="font-semibold text-gray-800 mb-4">Legal</h3>
-            <nav className="flex flex-col gap-2">
-              <a href="#" className="text-gray-600 hover:text-gray-800 text-sm">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-600 hover:text-gray-800 text-sm">
-                Terms of Service
-              </a>
-              <Link
-                href="/contact"
-                className="text-gray-600 hover:text-gray-800 text-sm"
-              >
-                Contact
-              </Link>
-            </nav>
+          <div className="mt-10 border-t border-(--border-subtle) pt-6">
+            <p className="text-center text-sm text-(--text-secondary)">
+              &copy; {currentYear} Readora. Crafted for readers, students, and
+              storytellers.
+            </p>
           </div>
-        </div>
-
-        {/* Divider */}
-        <div className="border-t border-gray-200 pt-8">
-          <p className="text-center text-gray-600 text-sm">
-            &copy; {currentYear} Readora. All rights reserved.
-          </p>
         </div>
       </div>
     </footer>
