@@ -187,15 +187,15 @@ const UploadForm = () => {
     <>
       {isSubmitting && <LoadingOverlay />}
 
-      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-12">
         {/* Progress Step Indicator */}
-        <div className="mb-12">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="mb-8 sm:mb-12">
+          <div className="flex items-center gap-3 sm:gap-4 overflow-x-auto pb-2 sm:overflow-visible sm:pb-0">
             {/* Step 1 */}
-            <div className="flex items-center flex-1">
+            <div className="flex items-center min-w-45 sm:min-w-0 sm:flex-1 shrink-0">
               <div
                 className={cn(
-                  "flex items-center justify-center w-10 h-10 rounded-full font-semibold transition-all duration-300",
+                  "flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full font-semibold transition-all duration-300",
                   isStep1Complete
                     ? "bg-[#7c9a82] text-white"
                     : currentStep === 1
@@ -204,9 +204,9 @@ const UploadForm = () => {
                 )}
               >
                 {isStep1Complete ? (
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                 ) : (
-                  <FileText className="w-5 h-5" />
+                  <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                 )}
               </div>
               <div className="ml-3">
@@ -216,13 +216,13 @@ const UploadForm = () => {
             </div>
 
             {/* Connector */}
-            <div className="hidden sm:block w-8 h-0.5 bg-[#f3e4c7] mt-2" />
+            <div className="w-6 sm:w-8 h-0.5 bg-[#f3e4c7] shrink-0" />
 
             {/* Step 2 */}
-            <div className="flex items-center flex-1">
+            <div className="flex items-center min-w-45 sm:min-w-0 sm:flex-1 shrink-0">
               <div
                 className={cn(
-                  "flex items-center justify-center w-10 h-10 rounded-full font-semibold transition-all duration-300",
+                  "flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full font-semibold transition-all duration-300",
                   isStep2Complete
                     ? "bg-[#7c9a82] text-white"
                     : currentStep === 2
@@ -231,9 +231,9 @@ const UploadForm = () => {
                 )}
               >
                 {isStep2Complete ? (
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                 ) : (
-                  <BookOpen className="w-5 h-5" />
+                  <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
                 )}
               </div>
               <div className="ml-3">
@@ -243,13 +243,13 @@ const UploadForm = () => {
             </div>
 
             {/* Connector */}
-            <div className="hidden sm:block w-8 h-0.5 bg-[#f3e4c7] mt-2" />
+            <div className="w-6 sm:w-8 h-0.5 bg-[#f3e4c7] shrink-0" />
 
             {/* Step 3 */}
-            <div className="flex items-center flex-1">
+            <div className="flex items-center min-w-45 sm:min-w-0 sm:flex-1 shrink-0">
               <div
                 className={cn(
-                  "flex items-center justify-center w-10 h-10 rounded-full font-semibold transition-all duration-300",
+                  "flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full font-semibold transition-all duration-300",
                   isStep3Complete
                     ? "bg-[#7c9a82] text-white"
                     : currentStep === 3
@@ -258,9 +258,9 @@ const UploadForm = () => {
                 )}
               >
                 {isStep3Complete ? (
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                 ) : (
-                  <Mic className="w-5 h-5" />
+                  <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
                 )}
               </div>
               <div className="ml-3">
@@ -275,12 +275,12 @@ const UploadForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-0">
             {/* Step 1: File Upload Section */}
-            <div className="mb-10 bg-white rounded-2xl p-6 sm:p-8 shadow-soft border border-[#f3e4c7]">
+            <div className="mb-8 sm:mb-10 bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-soft border border-[#f3e4c7]">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-8 rounded-full bg-[#fff6e5] flex items-center justify-center">
                   <FileText className="w-5 h-5 text-[#663820]" />
                 </div>
-                <h2 className="text-xl font-serif font-semibold text-[#212a3b]">
+                <h2 className="text-lg sm:text-xl font-serif font-semibold text-[#212a3b]">
                   Upload Your Book
                 </h2>
               </div>
@@ -324,12 +324,12 @@ const UploadForm = () => {
             </div>
 
             {/* Step 2: Details Section */}
-            <div className="mb-10 bg-white rounded-2xl p-6 sm:p-8 shadow-soft border border-[#f3e4c7]">
+            <div className="mb-8 sm:mb-10 bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-soft border border-[#f3e4c7]">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-8 rounded-full bg-[#fff6e5] flex items-center justify-center">
                   <BookOpen className="w-5 h-5 text-[#663820]" />
                 </div>
-                <h2 className="text-xl font-serif font-semibold text-[#212a3b]">
+                <h2 className="text-lg sm:text-xl font-serif font-semibold text-[#212a3b]">
                   Book Details
                 </h2>
               </div>
@@ -387,12 +387,12 @@ const UploadForm = () => {
             </div>
 
             {/* Step 3: Voice Selection Section */}
-            <div className="mb-10 bg-white rounded-2xl p-6 sm:p-8 shadow-soft border border-[#f3e4c7]">
+            <div className="mb-8 sm:mb-10 bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-soft border border-[#f3e4c7]">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-8 rounded-full bg-[#fff6e5] flex items-center justify-center">
                   <Mic className="w-5 h-5 text-[#663820]" />
                 </div>
-                <h2 className="text-xl font-serif font-semibold text-[#212a3b]">
+                <h2 className="text-lg sm:text-xl font-serif font-semibold text-[#212a3b]">
                   Assistant Voice
                 </h2>
               </div>
@@ -440,8 +440,8 @@ const UploadForm = () => {
             </div>
 
             {/* Info Box */}
-            <div className="mt-8 bg-[#fff6e5] rounded-lg p-4 border border-[#f3e4c7]">
-              <p className="text-sm text-[#3d485e] font-light">
+            <div className="mt-6 sm:mt-8 bg-[#fff6e5] rounded-lg p-4 sm:p-5 border border-[#f3e4c7]">
+              <p className="text-xs sm:text-sm text-[#3d485e] font-light leading-relaxed">
                 <span className="font-semibold text-[#212a3b]">
                   Ready to create?
                 </span>{" "}
