@@ -1,8 +1,13 @@
 "use server";
 
-import { EndSessionResult, StartSessionResult } from "@/types";
+import {
+  EndSessionResult,
+  GetUserVoiceSessionsResult,
+  StartSessionResult,
+} from "@/types";
 import { connectToDatabase } from "@/database/mongoose";
 import VoiceSession from "@/database/models/voiceSessionModel";
+import Book from "@/database/models/bookModel";
 
 export const startVoiceSession = async (
   clerkId: string,
@@ -78,6 +83,60 @@ export const endVoiceSession = async (
     return {
       success: false,
       error: "Failed to end voice session. Please try again later.",
+    };
+  }
+};
+
+export const getUserVoiceSessions = async (
+  clerkId: string,
+): Promise<GetUserVoiceSessionsResult> => {
+  try {
+    await connectToDatabase();
+
+    const { getUserPlan } = await import("@/lib/subscription.server");
+    const { PLAN_LIMITS } = await import("@/lib/subscription-constants");
+
+    const plan = await getUserPlan();
+    const limits = PLAN_LIMITS[plan];
+
+    if (!limits.hasSessionHistory) {
+      return { success: true, data: [], planLocked: true };
+    }
+
+    const sessions = await VoiceSession.find({ clerkId })
+      .sort({ startedAt: -1 })
+      .limit(50)
+      .lean();
+
+    const bookIds = [...new Set(sessions.map((s) => s.bookId.toString()))];
+    const books = await Book.find({
+      _id: { $in: bookIds },
+    })
+      .select("_id title author slug")
+      .lean();
+
+    const bookMap = new Map(books.map((b) => [b._id.toString(), b]));
+
+    const data = sessions.map((s) => {
+      const book = bookMap.get(s.bookId.toString());
+      return {
+        ...s,
+        bookTitle: book?.title ?? "Unknown Book",
+        bookAuthor: book?.author ?? "",
+        bookSlug: book?.slug ?? "",
+      };
+    });
+
+    const { serializeData } = await import("@/lib/utils");
+
+    return { success: true, data: serializeData(data), planLocked: false };
+  } catch (e) {
+    console.error("Error fetching user voice sessions", e);
+    return {
+      success: false,
+      data: [],
+      planLocked: false,
+      error: "Failed to fetch voice sessions.",
     };
   }
 };

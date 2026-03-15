@@ -118,6 +118,50 @@ export interface FileUploadFieldProps<T extends FieldValues> {
 }
 import { PLANS, PlanType } from "@/lib/subscription-constants";
 
+// ============================================
+// PROFILE PAGE TYPES
+// ============================================
+
+export interface UserBookWithStats {
+  _id: string;
+  clerkId: string;
+  title: string;
+  slug: string;
+  author: string;
+  persona?: string;
+  fileURL: string;
+  fileBlobKey: string;
+  coverURL: string;
+  coverBlobKey?: string;
+  fileSize: number;
+  totalSegments: number;
+  segmentCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserVoiceSessionWithBook {
+  _id: string;
+  clerkId: string;
+  bookId: string;
+  bookTitle: string;
+  bookAuthor: string;
+  bookSlug: string;
+  startedAt: string;
+  endedAt?: string;
+  durationSeconds: number;
+  billingPeriodStart: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface GetUserVoiceSessionsResult {
+  success: boolean;
+  data: UserVoiceSessionWithBook[];
+  planLocked: boolean;
+  error?: string;
+}
+
 export interface SessionCheckResult {
   allowed: boolean;
   currentCount: number;

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Home, ArrowLeft } from "lucide-react";
+import { BookOpen, Home } from "lucide-react";
 
 export default function NotFound() {
   const router = useRouter();
@@ -47,32 +47,6 @@ export default function NotFound() {
               Go to Home
             </Link>
           </Button>
-
-          <Button variant="outline" size="lg" onClick={() => router.back()}>
-            <ArrowLeft className="w-4 h-4" />
-            Go Back
-          </Button>
-        </div>
-
-        {/* Decorative Element */}
-        <div className="mt-12 pt-8 border-t border-border-subtle">
-          <p className="text-sm text-text-muted">
-            Lost? Visit your{" "}
-            <Link
-              href="/"
-              className="text-text-primary hover:underline font-medium"
-            >
-              Library
-            </Link>{" "}
-            or{" "}
-            <Link
-              href="/books/new"
-              className="text-text-primary hover:underline font-medium"
-            >
-              add a new book
-            </Link>
-            .
-          </p>
         </div>
       </div>
     </div>

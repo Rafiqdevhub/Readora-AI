@@ -86,7 +86,7 @@ const Navbar = () => {
                   <UserButton />
                   {user?.firstName && (
                     <Link
-                      href="/subscriptions"
+                      href="/profile"
                       className="pr-2 text-sm font-semibold text-(--text-primary) hover:text-(--color-brand)"
                     >
                       {user.firstName}
@@ -171,7 +171,7 @@ const Navbar = () => {
               <SignedIn>
                 {user?.firstName && (
                   <Link
-                    href="/subscriptions"
+                    href="/profile"
                     className="rounded-xl px-4 py-2.5 text-sm font-semibold text-(--text-primary) hover:bg-(--bg-tertiary)"
                   >
                     {user.firstName}

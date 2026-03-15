@@ -191,6 +191,43 @@ export const saveBookSegments = async (
   }
 };
 
+export const getUserBooks = async (clerkId: string) => {
+  try {
+    await connectToDatabase();
+
+    const books = await Book.find({ clerkId }).sort({ createdAt: -1 }).lean();
+
+    const bookIds = books.map((b) => b._id);
+
+    const segmentCounts: { _id: mongoose.Types.ObjectId; count: number }[] =
+      await BookSegment.aggregate([
+        { $match: { bookId: { $in: bookIds } } },
+        { $group: { _id: "$bookId", count: { $sum: 1 } } },
+      ]);
+
+    const countMap = new Map(
+      segmentCounts.map(({ _id, count }) => [_id.toString(), count]),
+    );
+
+    const booksWithStats = books.map((book) => ({
+      ...book,
+      segmentCount: countMap.get(book._id.toString()) ?? 0,
+    }));
+
+    return {
+      success: true,
+      data: serializeData(booksWithStats),
+    };
+  } catch (e) {
+    console.error("Error fetching user books", e);
+    return {
+      success: false,
+      error: serializeError(e),
+      data: [],
+    };
+  }
+};
+
 // Searches book segments using MongoDB text search with regex fallback
 export const searchBookSegments = async (
   bookId: string,
