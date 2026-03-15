@@ -1,5 +1,10 @@
-import React from "react";
-import Link from "next/link";
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
+import { useSubscription } from "@/hooks/userSubscription";
+import { getUserBookCount } from "@/lib/actions/book.actions";
 import {
   ArrowRight,
   AudioLines,
@@ -10,10 +15,34 @@ import {
   Layers,
   Sparkles,
   Upload,
+  UserPlus,
   WandSparkles,
 } from "lucide-react";
 
 const HeroSection = () => {
+  const router = useRouter();
+  const { isSignedIn } = useAuth();
+  const { limits } = useSubscription();
+  const [isChecking, setIsChecking] = useState(false);
+
+  const handleUploadClick = async () => {
+    if (!isSignedIn) {
+      router.push("/sign-in");
+      return;
+    }
+    setIsChecking(true);
+    try {
+      const count = await getUserBookCount();
+      if (count >= limits.maxBooks) {
+        router.push("/subscriptions");
+      } else {
+        router.push("/books/new");
+      }
+    } finally {
+      setIsChecking(false);
+    }
+  };
+
   const features = [
     { icon: AudioLines, label: "Natural Voice Chat" },
     { icon: BookOpen, label: "Books, PDFs, Notes" },
@@ -23,18 +52,24 @@ const HeroSection = () => {
   const journey = [
     {
       number: "01",
-      title: "Upload Your Material",
-      description: "Drop books, PDFs, and study notes in one place.",
-      icon: Upload,
+      title: "Create Your Account",
+      description: "Sign up in seconds — no credit card required.",
+      icon: UserPlus,
     },
     {
       number: "02",
+      title: "Upload Your Material",
+      description: "Drop any book, PDF, or study notes in one place.",
+      icon: Upload,
+    },
+    {
+      number: "03",
       title: "AI Maps The Knowledge",
       description: "We segment, index, and understand every chapter fast.",
       icon: Layers,
     },
     {
-      number: "03",
+      number: "04",
       title: "Talk And Learn",
       description: "Ask with your voice and receive clear, cited answers.",
       icon: WandSparkles,
@@ -105,22 +140,39 @@ const HeroSection = () => {
           </div>
 
           <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-            <Link
-              href="/books/new"
-              className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-linear-to-r from-[#1f2d44] to-[#34547a] px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:scale-[1.02] hover:shadow-soft-lg active:scale-[0.98] sm:w-auto sm:px-7 sm:py-4 sm:text-base"
+            <button
+              onClick={handleUploadClick}
+              disabled={isChecking}
+              className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-linear-to-r from-[#1f2d44] to-[#34547a] px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:scale-[1.02] hover:shadow-soft-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-7 sm:py-4 sm:text-base cursor-pointer"
             >
-              <span>Start With Your First Upload</span>
-              <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-
-            <div className="w-full rounded-xl border border-[#f3e4c7] bg-white/80 px-4 py-3 backdrop-blur-sm sm:w-auto">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#7a533a]">
-                Typical setup
-              </p>
-              <p className="mt-1 text-sm text-[#33425a]">
-                Less than 3 minutes to first answer
-              </p>
-            </div>
+              {isChecking ? (
+                <svg
+                  className="h-5 w-5 animate-spin"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
+                </svg>
+              ) : (
+                <Upload className="h-5 w-5 shrink-0" />
+              )}
+              <span>{isChecking ? "Checking..." : "Upload PDF / Book"}</span>
+              {!isChecking && (
+                <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              )}
+            </button>
           </div>
         </div>
 

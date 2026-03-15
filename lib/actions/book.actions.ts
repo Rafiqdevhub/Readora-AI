@@ -8,6 +8,14 @@ import Book from "@/database/models/bookModel";
 import BookSegment from "@/database/models/bookSegmentModel";
 import mongoose from "mongoose";
 
+export const getUserBookCount = async (): Promise<number> => {
+  const { auth } = await import("@clerk/nextjs/server");
+  const { userId } = await auth();
+  if (!userId) return 0;
+  await connectToDatabase();
+  return await Book.countDocuments({ clerkId: userId });
+};
+
 export const getAllBooks = async (search?: string) => {
   try {
     await connectToDatabase();
