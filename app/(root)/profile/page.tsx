@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { SignOutButton } from "@clerk/nextjs";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import BookCard from "@/components/BookCard";
+import Footer from "@/components/Footer";
 import { getUserBooks } from "@/lib/actions/book.actions";
 import { getUserVoiceSessions } from "@/lib/actions/session.action";
 import { getUserPlan } from "@/lib/subscription.server";
@@ -78,50 +79,68 @@ export default async function ProfilePage() {
     [user?.firstName, user?.lastName].filter(Boolean).join(" ") || "Reader";
   const email = user?.emailAddresses?.[0]?.emailAddress ?? "";
 
+  const statCards = [
+    { label: "Books Uploaded", value: books.length },
+    { label: "Total Segments", value: totalSegments.toLocaleString() },
+    { label: "Sessions This Month", value: monthSessions },
+    { label: "Current Plan", value: badge.label },
+  ];
+
   return (
     <>
       <main className="wrapper container pt-28 pb-16">
-        <section className="mb-10 rounded-2xl border border-(--border-medium) bg-white/80 backdrop-blur-sm shadow-(--shadow-soft-md) p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            <div className="relative shrink-0">
-              {user?.imageUrl ? (
-                <Image
-                  src={user.imageUrl}
-                  alt={fullName}
-                  width={88}
-                  height={88}
-                  className="rounded-full ring-4 ring-[#f3e4c7] object-cover"
-                />
-              ) : (
-                <div className="h-22 w-22 rounded-full ring-4 ring-[#f3e4c7] bg-[#f3e4c7] flex items-center justify-center">
-                  <span className="text-3xl font-serif font-bold text-[#663820]">
-                    {fullName.charAt(0)}
+        <section className="relative mb-10 overflow-hidden rounded-4xl border border-(--border-medium) bg-[radial-gradient(circle_at_8%_14%,rgba(102,56,32,0.16),transparent_34%),radial-gradient(circle_at_92%_6%,rgba(33,42,59,0.13),transparent_28%),linear-gradient(to_bottom_right,var(--bg-tertiary),white_45%,var(--bg-primary))] p-6 shadow-(--shadow-soft-lg) sm:p-8 md:p-10">
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(33,42,59,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(33,42,59,0.05)_1px,transparent_1px)] bg-size-[38px_38px] opacity-30" />
+
+          <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+              <div className="relative shrink-0">
+                {user?.imageUrl ? (
+                  <Image
+                    src={user.imageUrl}
+                    alt={fullName}
+                    width={96}
+                    height={96}
+                    className="rounded-full ring-4 ring-[#f3e4c7] object-cover"
+                  />
+                ) : (
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#f3e4c7] ring-4 ring-[#f3e4c7]">
+                    <span className="text-3xl font-serif font-bold text-[#663820]">
+                      {fullName.charAt(0)}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="text-center sm:text-left">
+                <p className="inline-flex rounded-full border border-(--border-medium) bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-(--color-brand)">
+                  My Profile
+                </p>
+                <div className="mt-3 flex flex-col items-center gap-2 sm:flex-row sm:items-center">
+                  <h1 className="text-3xl font-serif font-bold text-[#212a3b] sm:text-4xl">
+                    {fullName}
+                  </h1>
+                  <span
+                    className={`inline-flex items-center rounded-full px-3 py-0.5 text-xs font-semibold ${badge.className}`}
+                  >
+                    {badge.label} Plan
                   </span>
                 </div>
-              )}
-            </div>
-
-            {/* Info */}
-            <div className="flex-1 text-center sm:text-left">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
-                <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#212a3b]">
-                  {fullName}
-                </h1>
-                <span
-                  className={`self-center sm:self-auto inline-flex items-center rounded-full px-3 py-0.5 text-xs font-semibold ${badge.className}`}
-                >
-                  {badge.label} Plan
-                </span>
+                {email && (
+                  <p className="mt-1 text-sm text-[#5a6474]">{email}</p>
+                )}
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#5a6474] sm:text-base">
+                  Welcome back. Track your reading progress, manage uploads, and
+                  review your voice learning sessions from one place.
+                </p>
               </div>
-              {email && <p className="text-sm text-[#5a6474]">{email}</p>}
             </div>
 
-            <div className="shrink-0 flex items-center gap-2">
-              {/* Upgrade CTA for free/standard */}
+            <div className="flex shrink-0 flex-wrap items-center justify-center gap-2 sm:justify-start lg:justify-end">
               {plan !== "pro" && (
                 <Link
                   href="/subscriptions"
-                  className="rounded-full px-5 py-2 text-sm font-semibold bg-[#663820] text-white hover:bg-[#7a4528] transition-colors"
+                  className="rounded-full bg-[#663820] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#7a4528]"
                 >
                   Upgrade Plan
                 </Link>
@@ -130,7 +149,7 @@ export default async function ProfilePage() {
               <SignOutButton redirectUrl="/">
                 <button
                   type="button"
-                  className="rounded-full px-5 py-2 text-sm font-semibold border border-(--border-medium) bg-white text-(--text-primary) hover:bg-(--bg-tertiary) transition-colors cursor-pointer"
+                  className="cursor-pointer rounded-full border border-(--border-medium) bg-white px-5 py-2 text-sm font-semibold text-(--text-primary) transition-colors hover:bg-(--bg-tertiary)"
                 >
                   Sign Out
                 </button>
@@ -139,31 +158,30 @@ export default async function ProfilePage() {
           </div>
         </section>
 
-        <section className="mb-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {[
-            { label: "Books Uploaded", value: books.length },
-            { label: "Total Segments", value: totalSegments.toLocaleString() },
-            { label: "Sessions This Month", value: monthSessions },
-            { label: "Current Plan", value: badge.label },
-          ].map(({ label, value }) => (
+        <section className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {statCards.map(({ label, value }) => (
             <div
               key={label}
-              className="rounded-2xl border border-(--border-medium) bg-white/80 p-4 text-center shadow-(--shadow-soft-md)"
+              className="rounded-2xl border border-(--border-medium) bg-white/80 p-4 text-center shadow-(--shadow-soft-md) transition-transform duration-300 hover:-translate-y-0.5"
             >
-              <p className="text-2xl font-bold text-[#663820]">{value}</p>
-              <p className="mt-1 text-xs font-medium text-[#5a6474]">{label}</p>
+              <p className="text-2xl font-bold text-[#663820] sm:text-3xl">
+                {value}
+              </p>
+              <p className="mt-1 text-xs font-medium uppercase tracking-[0.08em] text-[#5a6474]">
+                {label}
+              </p>
             </div>
           ))}
         </section>
 
-        <section className="mb-12">
+        <section className="mb-12 rounded-3xl border border-(--border-medium) bg-white/70 p-5 shadow-(--shadow-soft-md) sm:p-7">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-serif font-bold text-[#212a3b]">
               My Books
             </h2>
             <Link
               href="/books/new"
-              className="rounded-full px-4 py-2 text-sm font-semibold border border-(--border-medium) bg-white/75 text-(--text-primary) hover:bg-[#f3e4c7] transition-colors"
+              className="rounded-full border border-(--border-medium) bg-white/75 px-4 py-2 text-sm font-semibold text-(--text-primary) transition-colors hover:bg-[#f3e4c7]"
             >
               + Upload New
             </Link>
@@ -187,7 +205,7 @@ export default async function ProfilePage() {
               </p>
               <Link
                 href="/books/new"
-                className="rounded-full px-5 py-2.5 text-sm font-semibold bg-[#663820] text-white hover:bg-[#7a4528] transition-colors"
+                className="rounded-full bg-[#663820] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7a4528]"
               >
                 Upload Your First Book
               </Link>
@@ -205,7 +223,7 @@ export default async function ProfilePage() {
                   <p className="text-center text-xs text-[#5a6474]">
                     {book.totalSegments > 0
                       ? `${book.totalSegments.toLocaleString()} segments`
-                      : "Processing…"}
+                      : "Processing..."}
                   </p>
                 </div>
               ))}
@@ -213,7 +231,7 @@ export default async function ProfilePage() {
           )}
         </section>
 
-        <section className="mb-6">
+        <section className="mb-6 rounded-3xl border border-(--border-medium) bg-white/70 p-5 shadow-(--shadow-soft-md) sm:p-7">
           <h2 className="text-2xl font-serif font-bold text-[#212a3b] mb-6">
             Voice Sessions
           </h2>
@@ -244,7 +262,7 @@ export default async function ProfilePage() {
               </p>
               <Link
                 href="/subscriptions"
-                className="rounded-full px-5 py-2.5 text-sm font-semibold bg-[#663820] text-white hover:bg-[#7a4528] transition-colors"
+                className="rounded-full bg-[#663820] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7a4528]"
               >
                 View Plans
               </Link>

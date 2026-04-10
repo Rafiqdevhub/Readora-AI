@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -28,19 +29,22 @@ export const metadata: Metadata = {
 
 const highlights = [
   {
-    title: "🎯 Intelligent Document Processing",
+    title: "Intelligent Document Processing",
+    icon: "01",
     description:
       "Upload PDFs, books, and research papers effortlessly. Our advanced AI parses, segments, and indexes your content with precision, making every piece of information instantly searchable and retrievable.",
     stats: "99.9% accuracy",
   },
   {
-    title: "🎤 Voice-First Interaction",
+    title: "Voice-First Interaction",
+    icon: "02",
     description:
       "Engage in natural, real-time AI voice conversations with your documents. Ask questions, explore concepts, and gain deeper understanding through intuitive spoken dialogue.",
     stats: "Real-time responses",
   },
   {
-    title: "🚀 Smart Learning & Discovery",
+    title: "Smart Learning & Discovery",
+    icon: "03",
     description:
       "Your personal AI-powered library that learns from you. Search, organize, and connect ideas across all your documents in one seamless, intelligent workspace.",
     stats: "Unlimited storage",
@@ -69,82 +73,104 @@ const features = [
 ];
 
 const benefits = [
-  "⚡ 10x faster information retrieval",
-  "🧠 Enhanced comprehension and retention",
-  "💬 Natural language understanding",
-  "📚 Centralized knowledge management",
-  "🔒 Private and secure by default",
-  "🌐 Access anywhere, anytime",
+  "10x faster information retrieval",
+  "Enhanced comprehension and retention",
+  "Natural language understanding",
+  "Centralized knowledge management",
+  "Private and secure by default",
+  "Access anywhere, anytime",
+];
+
+const metrics = [
+  { label: "Documents Processed", value: "2M+" },
+  { label: "Avg. Response Time", value: "<1s" },
+  { label: "Learner Satisfaction", value: "98%" },
 ];
 
 export default function AboutPage() {
   return (
     <>
       <main className="wrapper container">
-        {/* Hero Section */}
-        <section className="relative rounded-3xl border border-border bg-gradient-to-br from-card via-card to-muted/20 p-8 md:p-14 shadow-lg overflow-hidden">
-          <div className="absolute top-0 right-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl -z-10" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl -z-10" />
+        <section className="relative overflow-hidden rounded-4xl border border-(--border-medium) bg-[radial-gradient(circle_at_8%_10%,rgba(102,56,32,0.17),transparent_28%),radial-gradient(circle_at_92%_0%,rgba(33,42,59,0.13),transparent_32%),linear-gradient(to_bottom_right,var(--bg-tertiary),white_40%,var(--bg-primary))] px-6 py-10 shadow-soft-lg sm:px-9 md:px-12 md:py-14">
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(33,42,59,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(33,42,59,0.06)_1px,transparent_1px)] bg-size-[42px_42px] opacity-30" />
 
-          <div className="relative z-10">
-            <div className="inline-block rounded-full px-4 py-1.5 bg-primary/10 border border-primary/20 mb-4">
-              <p className="text-sm font-semibold text-primary">
+          <div className="relative z-10 grid gap-10 lg:grid-cols-2 lg:gap-12">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-(--border-medium) bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-(--color-brand)">
                 About Readora
+              </div>
+
+              <h1 className="mt-6 max-w-xl text-4xl font-bold leading-tight text-(--text-primary) sm:text-5xl md:text-6xl">
+                Talk. Learn. Understand.
+              </h1>
+
+              <p className="mt-6 max-w-2xl text-base leading-relaxed text-(--text-secondary) sm:text-lg md:text-xl">
+                Readora transforms static documents into interactive voice
+                conversations, helping you learn faster, understand deeper, and
+                engage with ideas in the most natural way possible.
               </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <span className="rounded-full border border-(--border-medium) bg-white/70 px-4 py-2 text-sm font-semibold text-(--text-primary)">
+                  AI-Powered
+                </span>
+                <span className="rounded-full border border-(--border-medium) bg-white/70 px-4 py-2 text-sm font-semibold text-(--text-primary)">
+                  Voice-First
+                </span>
+                <span className="rounded-full border border-(--border-medium) bg-white/70 px-4 py-2 text-sm font-semibold text-(--text-primary)">
+                  Intelligent Search
+                </span>
+              </div>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
-              Talk. Learn. Understand.
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl">
-              Readora transforms static documents into interactive voice
-              conversations, empowering you to learn faster, understand deeper,
-              and engage with ideas in the most natural way possible — through
-              conversation.
-            </p>
-            <div className="flex flex-wrap gap-4 mt-8">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-sm font-medium">AI-Powered</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                <span className="text-sm font-medium">Voice-First</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-                <span className="text-sm font-medium">Intelligent Search</span>
-              </div>
+
+            <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 lg:content-start">
+              {metrics.map((metric) => (
+                <article
+                  key={metric.label}
+                  className="rounded-2xl border border-(--border-subtle) bg-white/75 p-5 backdrop-blur-sm"
+                >
+                  <p className="text-3xl font-bold text-(--text-primary)">
+                    {metric.value}
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-(--text-secondary)">
+                    {metric.label}
+                  </p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Core Features */}
-        <section className="mt-12 md:mt-16">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              Why Choose Readora?
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Experience the future of document interaction with cutting-edge AI
-              technology
-            </p>
+        <section className="mt-14 md:mt-18">
+          <div className="mb-8 flex items-end justify-between gap-6">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-(--color-brand)">
+                Core Advantages
+              </p>
+              <h2 className="mt-2 text-3xl font-bold text-(--text-primary) md:text-4xl">
+                Why teams choose Readora
+              </h2>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {highlights.map((item, index) => (
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {highlights.map((item) => (
               <article
                 key={item.title}
-                className="group relative rounded-2xl border border-border bg-card p-7 shadow-soft-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                className="group relative overflow-hidden rounded-3xl border border-(--border-subtle) bg-white/80 p-7 shadow-soft-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-md"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-(--bg-secondary)/65 blur-2xl transition-transform duration-300 group-hover:scale-125" />
                 <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-bold">{item.title}</h3>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed mb-4">
+                  <span className="inline-flex rounded-full border border-(--border-medium) bg-(--bg-tertiary) px-3 py-1 text-xs font-bold tracking-[0.12em] text-(--color-brand)">
+                    {item.icon}
+                  </span>
+                  <h3 className="mt-4 text-2xl font-bold text-(--text-primary)">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-(--text-secondary)">
                     {item.description}
                   </p>
-                  <div className="inline-block rounded-full px-3 py-1 bg-primary/10 text-primary text-xs font-semibold">
+                  <div className="mt-5 inline-flex rounded-full bg-(--color-brand) px-3 py-1 text-xs font-semibold text-white">
                     {item.stats}
                   </div>
                 </div>
@@ -153,112 +179,130 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="mt-16 md:mt-20">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              How It Works
+        <section className="mt-16 rounded-4xl border border-(--border-medium) bg-linear-to-br from-white via-(--bg-tertiary)/60 to-(--bg-primary) p-8 md:mt-20 md:p-12">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-(--color-brand)">
+              Simple Workflow
+            </p>
+            <h2 className="mt-3 text-3xl font-bold text-(--text-primary) md:text-4xl">
+              From upload to insight in minutes
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Get started in minutes with our simple three-step process
+            <p className="mt-4 text-(--text-secondary)">
+              Get started quickly with a streamlined process designed for focus,
+              speed, and real understanding.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {features.map((feature, index) => (
-              <div key={feature.step} className="relative">
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white text-xl font-bold shadow-lg mb-4">
-                    {feature.step}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-                {index < features.length - 1 && (
-                  <div className="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gradient-to-r from-primary/50 to-transparent -z-10" />
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Benefits Grid */}
-        <section className="mt-16 md:mt-20 rounded-3xl border border-border bg-gradient-to-br from-muted/30 to-muted/10 p-8 md:p-12">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              Built for Modern Learners
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Everything you need to transform how you interact with information
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {benefits.map((benefit) => (
-              <div
-                key={benefit}
-                className="flex items-center gap-3 rounded-xl bg-card border border-border p-4 hover:bg-muted/50 transition-colors"
+              <article
+                key={feature.step}
+                className="relative rounded-2xl border border-(--border-subtle) bg-white/85 p-6"
               >
-                <span className="text-2xl">{benefit.split(" ")[0]}</span>
-                <span className="font-medium">{benefit.substring(3)}</span>
-              </div>
+                {index < features.length - 1 && (
+                  <div className="absolute right-0 top-10 hidden h-px w-8 translate-x-full bg-(--color-brand)/35 lg:block" />
+                )}
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-(--color-brand) text-lg font-bold text-white">
+                  {feature.step}
+                </span>
+                <h3 className="mt-4 text-xl font-bold text-(--text-primary)">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 leading-relaxed text-(--text-secondary)">
+                  {feature.description}
+                </p>
+              </article>
             ))}
           </div>
         </section>
 
-        {/* Mission Statement */}
-        <section className="mt-16 md:mt-20 rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-card to-card p-8 md:p-12 shadow-xl">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+        <section className="mt-16 grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-stretch md:mt-20">
+          <article className="rounded-4xl border border-(--border-medium) bg-white/80 p-8 shadow-soft-sm md:p-10">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-(--color-brand)">
+              Built for modern learners
+            </p>
+            <h2 className="mt-3 text-3xl font-bold text-(--text-primary) md:text-4xl">
+              Everything you need in one focused workspace
+            </h2>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {benefits.map((benefit) => (
+                <div
+                  key={benefit}
+                  className="flex items-center gap-3 rounded-xl border border-(--border-subtle) bg-(--bg-tertiary)/55 px-4 py-3"
+                >
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-(--color-brand) text-sm font-bold text-white">
+                    ✓
+                  </span>
+                  <span className="text-sm font-semibold text-(--text-primary)">
+                    {benefit}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="rounded-4xl border border-(--border-medium) bg-linear-to-b from-(--bg-primary) to-(--bg-secondary) p-8 md:p-10">
+            <h2 className="text-3xl font-bold text-(--text-primary)">
+              Our Mission
+            </h2>
+            <p className="mt-5 leading-relaxed text-(--text-secondary)">
               We&apos;re on a mission to revolutionize how people interact with
               documents. By combining advanced voice AI with intelligent content
               understanding, Readora empowers students, professionals,
               researchers, and curious minds to move beyond passive reading.
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              We believe learning should be{" "}
-              <span className="font-semibold text-foreground">
-                conversational
-              </span>
-              , discovery should be{" "}
-              <span className="font-semibold text-foreground">effortless</span>,
-              and knowledge should be{" "}
-              <span className="font-semibold text-foreground">accessible</span>{" "}
-              to everyone.
+            <p className="mt-4 leading-relaxed text-(--text-secondary)">
+              Learning should be{" "}
+              <strong className="text-(--text-primary)">conversational</strong>,
+              discovery should be{" "}
+              <strong className="text-(--text-primary)">effortless</strong>, and
+              knowledge should be{" "}
+              <strong className="text-(--text-primary)">accessible</strong> to
+              everyone.
             </p>
-            <div className="mt-8 inline-block rounded-2xl bg-card border border-border px-6 py-3">
-              <p className="text-sm font-medium text-muted-foreground">
-                Join thousands of users transforming their learning experience
+
+            <div className="mt-8 rounded-2xl border border-(--border-subtle) bg-white/70 p-5">
+              <p className="text-sm font-medium text-(--text-secondary)">
+                Join thousands of users transforming their learning experience.
               </p>
             </div>
-          </div>
+          </article>
         </section>
 
-        {/* CTA Section */}
-        <section className="mt-16 md:mt-20 mb-10 text-center">
-          <div className="rounded-3xl border border-border bg-gradient-to-r from-primary/10 via-primary/5 to-card p-10 md:p-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Any document. Any question. Start your journey with Readora today.
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-              Experience the future of learning with AI-powered voice
-              conversations that make understanding faster, easier, and more
-              engaging than ever before.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-xl bg-card border-2 border-border px-8 py-4 text-lg font-semibold hover:bg-muted transition-colors"
-              >
-                Contact Us
-              </a>
+        <section className="mt-16 mb-10 md:mt-20">
+          <div className="relative overflow-hidden rounded-4xl border border-(--border-medium) bg-[linear-gradient(120deg,var(--color-brand)_-10%,#8c5a3f_45%,#b57e61_100%)] px-8 py-10 text-center text-white md:px-12 md:py-14">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.22),transparent_32%),radial-gradient(circle_at_88%_80%,rgba(255,255,255,0.18),transparent_28%)]" />
+            <div className="relative z-10">
+              <h2 className="mx-auto max-w-3xl text-3xl font-bold leading-tight md:text-4xl">
+                Any document. Any question. Start your journey with Readora
+                today.
+              </h2>
+              <p className="mx-auto mt-5 max-w-2xl text-base text-white/90 md:text-lg">
+                Experience the future of learning with AI-powered voice
+                conversations that make understanding faster, easier, and more
+                engaging.
+              </p>
+
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link
+                  href="/books/new"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-base font-semibold text-(--color-brand) transition-colors hover:bg-(--bg-tertiary)"
+                >
+                  Upload Your First Document
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center rounded-full border border-white/70 bg-transparent px-7 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10"
+                >
+                  Contact Us
+                </Link>
+              </div>
             </div>
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
